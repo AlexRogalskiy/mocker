@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mocker</title>
+    <link rel="stylesheet" href="./node_modules/bootswatch/paper/bootstrap.css">
+    <link rel="stylesheet" href="./node_modules/switchery/dist/switchery.min.css">
+    <link rel="stylesheet" href="./node_modules/fuelux/dist/css/fuelux.css">
+    <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="./node_modules/monaco-editor/min/vs/editor/editor.main.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+</head>
+
+<body class="fuelux">
+    <div class="list-panel col-md-12">
+        <a class="btn btn-primary" id="btn-new"><i class="fa fa-plus"></i> <span locale="new"></span></a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width="80px" locale="req_method"></th>
+                    <th locale="req_url"></th>
+                    <th width="51px" locale="active"></th>
+                    <th width="100px" locale="operate"></th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="4" locale="nodata"></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="edit-panel col-md-12">
+        <div class="panel req-panel">
+            <p class="split-title" locale="match_req"></p>
+            <div class="panel-body">
+                <div class="form-group" id="form-uri">
+                    <label for="text-uri" locale="req_url"></label>
+                    <input class="form-control" placeholder="" id="text-uri">
+                </div>
+                <div class="form-group">
+                    <label locale="req_method"></label>
+                    <div class="input-group">
+                        <div class="btn-group selectlist" data-resize="auto" data-initialize="selectlist" id="select-method">
+                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
+                                <span class="selected-label">&nbsp;</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li data-value="ALL">
+                                    <a href="#" locale="all"></a>
+                                </li>
+                                <li data-value="GET">
+                                    <a href="#">GET</a>
+                                </li>
+                                <li data-value="POST">
+                                    <a href="#">POST</a>
+                                </li>
+                                <li data-value="PUT">
+                                    <a href="#">PUT</a>
+                                </li>
+                                <li data-value="PATCH">
+                                    <a href="#">PATCH</a>
+                                </li>
+                                <li data-value="DELETE">
+                                    <a href="#">DELETE</a>
+                                </li>
+                                <li data-value="COPY">
+                                    <a href="#">COPY</a>
+                                </li>
+                                <li data-value="HEAD">
+                                    <a href="#">HEAD</a>
+                                </li>
+                                <li data-value="OPTIONS">
+                                    <a href="#">OPTIONS</a>
+                                </li>
+                            </ul>
+                            <input class="hidden hidden-field" readonly="readonly" aria-hidden="true" type="text" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel res-panel">
+            <p class="split-title" locale="mock_res"></p>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="text-status" locale="res_code"></label>
+                    <div class="input-group input-append dropdown combobox" data-initialize="combobox" id="select-status">
+                        <input type="number" class="form-control" id="text-status">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li data-value="200" data-selected="true">
+                                    <a href="#">200</a>
+                                </li>
+                                <li data-value="302">
+                                    <a href="#">302</a>
+                                </li>
+                                <li data-value="404">
+                                    <a href="#">404</a>
+                                </li>
+                                <li data-value="500">
+                                    <a href="#">500</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text-mime" locale="res_mime"></label>
+                    <div class="input-group input-append dropdown combobox" data-initialize="combobox" id="select-mime" style="width: 100%;">
+                        <input type="text" class="form-control" id="text-mime">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li data-value="application/json; charset=UTF-8" data-selected="true">
+                                    <a href="#">application/json; charset=UTF-8</a>
+                                </li>
+                                <li data-value="text/html; charset=UTF-8">
+                                    <a href="#">text/html; charset=UTF-8</a>
+                                </li>
+                                <li data-value="application/javascript; charset=UTF-8">
+                                    <a href="#">application/javascript; charset=UTF-8</a>
+                                </li>
+                                <li data-value="text/css; charset=UTF-8">
+                                    <a href="#">text/css; charset=UTF-8</a>
+                                </li>
+                                <li data-value="text/plain; charset=UTF-8">
+                                    <a href="#">text/plain; charset=UTF-8</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="text-header" locale="res_headers"></label>
+                    <textarea class="form-control" placeholder="" rows="3" id="text-header"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="text-body" locale="res_body"></label>
+                    <div class="lang-mode-wrap">
+                        <select class="form-control input-sm" id="select-mode">
+                            <option value="json">JSON</option>
+                            <option value="html">HTML</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="css">CSS</option>
+                            <option value="plaintext" locale="plaintext"></option>
+                        </select>
+                        <p locale="lang_mode"></p>
+                    </div>
+                    <div id="text-body"></div>
+                </div>
+                <div class="form-group">
+                    <label for="text-delay" locale="res_delay"></label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="text-delay" value="0">
+                        <div class="input-group-addon">ms</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="action-bar">
+            <button class="btn btn-default btn-back" locale="back"></button>
+            <button class="btn btn-success btn-save" locale="save"></button>
+        </div>
+        <input type="hidden" id="uid" value="">
+        <input type="hidden" id="active" value="">
+    </div>
+    <script>
+        window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js');
+        const nodeRequire = global.require;
+    </script>
+    <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script>
+        // Save Monaco's amd require and restore Node's require
+        const amdRequire = global.require;
+        global.require = nodeRequire;
+    </script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="./node_modules/switchery/dist/switchery.min.js"></script>
+    <script src="./node_modules/fuelux/dist/js/fuelux.js"></script>
+    <script src="./node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
+    <script src="./static/js/index.js"></script>
+</body>
+
+</html>
